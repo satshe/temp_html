@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#17100f" />
+    <meta name="description" content="刘雨菡 · LYH · 爆爆" />
+    <title>刘雨菡 · LYH · 爆爆</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --mouse-x: 0px;
+        --mouse-y: 0px;
+        --warm-white: #fff8ee;
+        --coral: #ff766f;
+        --blush: #f3b4b2;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #17100f;
+      }
+
+      body {
+        min-height: 100svh;
+        font-family: "Arial Narrow", "PingFang SC", "Microsoft YaHei", sans-serif;
+      }
+
+      .stage {
+        position: fixed;
+        inset: 0;
+        isolation: isolate;
+        overflow: hidden;
+        background: #17100f;
+      }
+
+      .photo-blur,
+      .photo-main,
+      .shade,
+      .grain {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .photo-blur {
+        inset: -5%;
+        z-index: -5;
+        background: url("./pic.jpg") center 38% / cover no-repeat;
+        filter: blur(26px) saturate(0.82) brightness(0.66);
+        transform: scale(1.1);
+      }
+
+      .photo-main {
+        z-index: -4;
+        background: url("./pic.jpg") center center / contain no-repeat;
+        filter: saturate(0.88) contrast(1.04) brightness(0.88);
+      }
+
+      .shade {
+        z-index: -3;
+        background:
+          radial-gradient(circle at 50% 45%, transparent 12%, rgba(19, 10, 10, 0.08) 49%, rgba(10, 5, 5, 0.77) 118%),
+          linear-gradient(180deg, rgba(13, 8, 8, 0.22), transparent 25%, transparent 68%, rgba(13, 7, 7, 0.46));
+        box-shadow: inset 0 0 10vw rgba(0, 0, 0, 0.62);
+      }
+
+      .grain {
+        z-index: 8;
+        opacity: 0.11;
+        mix-blend-mode: soft-light;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
+      }
+
+      .words {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        transform: translate3d(calc(var(--mouse-x) * 0.14), calc(var(--mouse-y) * 0.14), 0);
+        transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      .word {
+        --x: 50;
+        --y: 50;
+        --rotate: 0deg;
+        --float-x: 8px;
+        --float-y: -12px;
+        --duration: 9s;
+        --delay: 0s;
+        --opacity: 0.7;
+        position: absolute;
+        left: calc(var(--x) * 1%);
+        top: calc(var(--y) * 1%);
+        display: block;
+        width: max-content;
+        max-width: 78vw;
+        color: var(--warm-white);
+        font-size: clamp(0.72rem, var(--size), 7.8rem);
+        font-weight: var(--weight, 700);
+        line-height: 0.85;
+        letter-spacing: var(--spacing, -0.04em);
+        opacity: var(--opacity);
+        text-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.85),
+          0 0 16px rgba(255, 224, 207, 0.22);
+        transform: translate(-50%, -50%) rotate(var(--rotate));
+        animation: float var(--duration) ease-in-out var(--delay) infinite alternate;
+        user-select: none;
+        white-space: nowrap;
+        will-change: transform;
+      }
+
+      .word:nth-child(4n + 1) {
+        font-family: Georgia, "Songti SC", serif;
+        font-style: italic;
+        color: var(--blush);
+      }
+
+      .word:nth-child(4n + 2) {
+        font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+        color: var(--warm-white);
+        text-transform: uppercase;
+      }
+
+      .word:nth-child(4n + 3) {
+        font-family: "Courier New", "Microsoft YaHei", monospace;
+        color: var(--coral);
+        letter-spacing: 0.04em;
+      }
+
+      .word:nth-child(5n) {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 248, 238, 0.76);
+        text-shadow: 0 0 18px rgba(255, 255, 255, 0.12);
+      }
+
+      .word:nth-child(7n) {
+        filter: blur(0.65px);
+        mix-blend-mode: screen;
+      }
+
+      .word:nth-child(11n) {
+        z-index: -1;
+        opacity: 0.24;
+        filter: blur(1.2px);
+      }
+
+      .signature {
+        position: absolute;
+        right: max(18px, env(safe-area-inset-right));
+        bottom: max(17px, env(safe-area-inset-bottom));
+        z-index: 6;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: rgba(255, 248, 238, 0.7);
+        font: 500 10px/1 "Courier New", monospace;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+      }
+
+      .signature::before {
+        width: 1px;
+        height: 34px;
+        content: "";
+        background: linear-gradient(transparent, rgba(255, 248, 238, 0.7));
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(-50%, -50%) rotate(var(--rotate));
+        }
+        100% {
+          transform:
+            translate(calc(-50% + var(--float-x)), calc(-50% + var(--float-y)))
+            rotate(calc(var(--rotate) + 2.4deg));
+        }
+      }
+
+      @media (max-aspect-ratio: 3 / 4) {
+        .photo-blur {
+          display: none;
+        }
+
+        .photo-main {
+          background-size: cover;
+        }
+
+        .shade {
+          box-shadow: inset 0 0 18vw rgba(0, 0, 0, 0.54);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .word {
+          animation: none;
+        }
+
+        .words {
+          transform: none;
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="stage" aria-label="刘雨菡的动态文字照片页">
+      <div class="photo-blur" aria-hidden="true"></div>
+      <div class="photo-main" aria-hidden="true"></div>
+      <div class="shade" aria-hidden="true"></div>
+      <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">
+        刘雨菡 · LYH · 爆爆
+      </h1>
+      <div class="words" id="words" aria-hidden="true"></div>
+      <div class="signature" aria-hidden="true">LYH · MOMENTS</div>
+      <div class="grain" aria-hidden="true"></div>
+    </main>
+
+    <script>
+      (() => {
+        const container = document.querySelector("#words");
+        const labels = ["刘雨菡", "LYH", "爆爆"];
+        const amount = window.innerWidth < 680 ? 36 : 48;
+
+        // 固定种子的随机数：每次打开都是同一幅“随意但经过设计”的排版。
+        let seed = 20260724;
+        const random = () => {
+          seed = (seed * 1664525 + 1013904223) % 4294967296;
+          return seed / 4294967296;
+        };
+
+        for (let i = 0; i < amount; i += 1) {
+          const word = document.createElement("span");
+          const label = labels[i % labels.length];
+          const size = 0.8 + random() * (i % 9 === 0 ? 6.7 : 3.9);
+          const x = -3 + random() * 106;
+          const y = -2 + random() * 104;
+          const rotate = -46 + random() * 92;
+          const opacity = 0.22 + random() * 0.68;
+          const duration = 6.4 + random() * 8.8;
+
+          word.className = "word";
+          word.textContent = label;
+          word.style.setProperty("--x", x.toFixed(2));
+          word.style.setProperty("--y", y.toFixed(2));
+          word.style.setProperty("--size", `${size.toFixed(2)}rem`);
+          word.style.setProperty("--rotate", `${rotate.toFixed(1)}deg`);
+          word.style.setProperty("--opacity", opacity.toFixed(2));
+          word.style.setProperty("--weight", random() > 0.52 ? "800" : "500");
+          word.style.setProperty("--spacing", `${(-0.08 + random() * 0.18).toFixed(2)}em`);
+          word.style.setProperty("--float-x", `${(-12 + random() * 24).toFixed(1)}px`);
+          word.style.setProperty("--float-y", `${(-19 + random() * 30).toFixed(1)}px`);
+          word.style.setProperty("--duration", `${duration.toFixed(1)}s`);
+          word.style.setProperty("--delay", `${(-random() * duration).toFixed(1)}s`);
+          container.appendChild(word);
+        }
+
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          let ticking = false;
+          window.addEventListener("pointermove", (event) => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+              const x = (event.clientX / window.innerWidth - 0.5) * 16;
+              const y = (event.clientY / window.innerHeight - 0.5) * 16;
+              document.documentElement.style.setProperty("--mouse-x", `${x.toFixed(1)}px`);
+              document.documentElement.style.setProperty("--mouse-y", `${y.toFixed(1)}px`);
+              ticking = false;
+            });
+          }, { passive: true });
+        }
+      })();
+    </script>
+  </body>
+</html>
