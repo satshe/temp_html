@@ -539,7 +539,7 @@
         left: 0;
         height: 18svh;
         content: "";
-        background: linear-gradient(transparent, rgba(255, 249, 236, 0.96));
+        background: linear-gradient(transparent, rgba(18, 10, 13, 0.98));
         pointer-events: none;
       }
 
@@ -717,6 +717,274 @@
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.5'/%3E%3C/svg%3E");
       }
 
+      .chapter-three {
+        --three-progress: 0;
+        --p3-scale: 0.9;
+        --p3-rotate: 3deg;
+        --p3-y: 3vh;
+        --p3-image-scale: 1.06;
+        --p3-left-x: -26vw;
+        --p3-right-x: 24vw;
+        --p3-halo-rotate: -18deg;
+        position: relative;
+        min-height: 165svh;
+        isolation: isolate;
+        color: var(--paper);
+        background: #120a0d;
+      }
+
+      .chapter-three::after {
+        position: absolute;
+        z-index: 12;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 18svh;
+        content: "";
+        background: linear-gradient(transparent, rgba(10, 8, 10, 0.99));
+        pointer-events: none;
+      }
+
+      .photo3-stage {
+        position: sticky;
+        top: 0;
+        height: 100svh;
+        overflow: hidden;
+      }
+
+      .photo3-stage::before,
+      .photo3-stage::after {
+        position: absolute;
+        z-index: 6;
+        width: 52px;
+        height: 3px;
+        content: "";
+        background: var(--red);
+        box-shadow: 0 9px 0 rgba(255, 249, 236, 0.64);
+        pointer-events: none;
+      }
+
+      .photo3-stage::before {
+        top: 7%;
+        left: 4%;
+      }
+
+      .photo3-stage::after {
+        right: 4%;
+        bottom: 7%;
+        transform: rotate(180deg);
+      }
+
+      .photo3-ambient,
+      .photo3-wash,
+      .photo3-grain {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .photo3-ambient {
+        inset: -8%;
+        z-index: -5;
+        background: url("./pic3.jpg") center 38% / cover no-repeat;
+        filter: blur(43px) saturate(0.78) brightness(0.31);
+        transform: scale(1.15);
+        animation: photo3-ambient-drift 17s ease-in-out infinite alternate;
+        will-change: transform, filter;
+      }
+
+      .photo3-wash {
+        z-index: -3;
+        background:
+          radial-gradient(circle at 17% 24%, rgba(255, 53, 93, 0.29), transparent 30%),
+          radial-gradient(circle at 84% 74%, rgba(255, 211, 101, 0.16), transparent 33%),
+          linear-gradient(135deg, rgba(18, 10, 13, 0.92), rgba(18, 10, 13, 0.48) 48%, rgba(3, 9, 9, 0.88));
+        animation: photo3-wash-breathe 11s ease-in-out infinite alternate;
+      }
+
+      .photo3-wash::before {
+        --p3-grid-size: 7.5vw;
+        position: absolute;
+        inset: 0;
+        content: "";
+        opacity: 0.1;
+        background-image:
+          linear-gradient(rgba(255, 249, 236, 0.25) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 249, 236, 0.25) 1px, transparent 1px);
+        background-size: var(--p3-grid-size) var(--p3-grid-size);
+        -webkit-mask-image: radial-gradient(circle at center, transparent 22%, #000 105%);
+        mask-image: radial-gradient(circle at center, transparent 22%, #000 105%);
+        animation: photo3-grid-drift 22s linear infinite;
+      }
+
+      .photo3-wash::after {
+        position: absolute;
+        top: 7%;
+        left: 8%;
+        width: 42vw;
+        max-width: 620px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        content: "";
+        opacity: 0.54;
+        background: radial-gradient(circle, rgba(255, 53, 93, 0.31), rgba(123, 28, 38, 0.08) 48%, transparent 72%);
+        filter: blur(44px);
+        animation: photo3-orb-float 13s ease-in-out infinite alternate;
+        will-change: transform;
+      }
+
+      .photo3-card {
+        position: absolute;
+        z-index: 3;
+        top: 50%;
+        left: 50%;
+        width: min(62vw, 62vh);
+        height: auto;
+        aspect-ratio: 988 / 1600;
+        margin: 0;
+        overflow: hidden;
+        border: 1px solid rgba(255, 249, 236, 0.62);
+        background: #dcd8cc;
+        box-shadow:
+          18px 18px 0 rgba(123, 28, 38, 0.88),
+          36px 36px 0 rgba(5, 4, 5, 0.96),
+          0 38px 90px rgba(0, 0, 0, 0.62);
+        transform:
+          translate(-50%, calc(-50% + var(--p3-y)))
+          rotate(var(--p3-rotate))
+          scale(var(--p3-scale));
+        will-change: transform;
+      }
+
+      .photo3-card::before {
+        position: absolute;
+        z-index: 2;
+        inset: 0;
+        content: "";
+        background:
+          linear-gradient(112deg, rgba(255, 255, 255, 0.19), transparent 24%),
+          linear-gradient(180deg, transparent 62%, rgba(32, 18, 19, 0.22));
+        mix-blend-mode: screen;
+        pointer-events: none;
+      }
+
+      .photo3-card::after {
+        position: absolute;
+        z-index: 3;
+        inset: 9px;
+        border: 1px solid rgba(255, 249, 236, 0.46);
+        content: "";
+        box-shadow: inset 0 0 0 1px rgba(23, 18, 18, 0.08);
+        pointer-events: none;
+      }
+
+      .photo3-card img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        filter: saturate(0.88) contrast(1.06) brightness(0.95);
+        transform: scale(var(--p3-image-scale));
+        will-change: transform;
+      }
+
+      .cat-halo {
+        position: absolute;
+        z-index: 1;
+        top: 47%;
+        left: 50%;
+        width: min(83vw, 83vh);
+        height: min(56vw, 56vh);
+        border: 1px solid rgba(255, 53, 93, 0.58);
+        border-radius: 50%;
+        transform: translate(-50%, -50%) rotate(var(--p3-halo-rotate));
+        box-shadow:
+          inset 0 0 0 9px rgba(255, 53, 93, 0.035),
+          0 0 0 1px rgba(255, 249, 236, 0.26),
+          0 0 42px rgba(255, 53, 93, 0.12);
+        will-change: transform;
+      }
+
+      .cat-halo::before,
+      .cat-halo::after {
+        position: absolute;
+        top: 50%;
+        width: 24%;
+        height: 1px;
+        content: "";
+        background: var(--red);
+        box-shadow:
+          0 -12px 0 rgba(255, 53, 93, 0.45),
+          0 12px 0 rgba(255, 53, 93, 0.45);
+      }
+
+      .cat-halo::before {
+        right: 96%;
+        transform: rotate(8deg);
+        transform-origin: right;
+      }
+
+      .cat-halo::after {
+        left: 96%;
+        transform: rotate(-8deg);
+        transform-origin: left;
+      }
+
+      .chapter-three__word {
+        position: absolute;
+        z-index: 5;
+        color: var(--paper);
+        font-size: clamp(5rem, 14vw, 13rem);
+        font-weight: 950;
+        line-height: 0.76;
+        letter-spacing: -0.13em;
+        pointer-events: none;
+        white-space: nowrap;
+        will-change: transform;
+      }
+
+      .chapter-three__word--left {
+        top: 12%;
+        left: 3vw;
+        color: var(--paper);
+        text-shadow:
+          5px 5px 0 rgba(255, 53, 93, 0.84),
+          0 0 28px rgba(255, 249, 236, 0.14);
+        transform: translateX(var(--p3-left-x)) rotate(-4deg);
+      }
+
+      .chapter-three__word--right {
+        right: 3vw;
+        bottom: 10%;
+        color: transparent;
+        -webkit-text-stroke: 1.5px rgba(255, 211, 101, 0.88);
+        text-shadow: 7px 7px 0 rgba(255, 53, 93, 0.42);
+        transform: translateX(var(--p3-right-x)) rotate(3deg);
+      }
+
+      .chapter-three__lyh {
+        position: absolute;
+        z-index: 0;
+        top: 50%;
+        left: 50%;
+        color: transparent;
+        font-size: clamp(9rem, 31vw, 28rem);
+        font-weight: 950;
+        line-height: 0.7;
+        letter-spacing: -0.1em;
+        -webkit-text-stroke: 1px rgba(255, 249, 236, 0.1);
+        transform: translate(-50%, -50%) rotate(-90deg);
+        white-space: nowrap;
+      }
+
+      .photo3-grain {
+        z-index: 8;
+        opacity: 0.09;
+        mix-blend-mode: soft-light;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 130 130' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence baseFrequency='.72' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='.38'/%3E%3C/svg%3E");
+      }
+
       .verdict {
         position: relative;
         min-height: 100svh;
@@ -725,11 +993,11 @@
         place-items: center;
         overflow: hidden;
         padding: clamp(72px, 10vw, 140px) 22px;
-        color: var(--ink);
+        color: var(--paper);
         background:
-          radial-gradient(circle at 15% 15%, rgba(255, 53, 93, 0.22), transparent 23%),
-          radial-gradient(circle at 85% 80%, rgba(204, 233, 223, 0.55), transparent 26%),
-          var(--paper);
+          radial-gradient(circle at 15% 15%, rgba(255, 53, 93, 0.22), transparent 25%),
+          radial-gradient(circle at 85% 80%, rgba(204, 233, 223, 0.12), transparent 28%),
+          linear-gradient(145deg, #120b0e, #080708 68%, #101a18);
       }
 
       .verdict::before {
@@ -737,10 +1005,10 @@
         inset: 0;
         z-index: -1;
         content: "";
-        opacity: 0.15;
+        opacity: 0.12;
         background-image:
-          linear-gradient(var(--ink) 1px, transparent 1px),
-          linear-gradient(90deg, var(--ink) 1px, transparent 1px);
+          linear-gradient(rgba(255, 249, 236, 0.34) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 249, 236, 0.34) 1px, transparent 1px);
         background-size: 48px 48px;
         -webkit-mask-image: radial-gradient(circle, transparent 16%, #000 100%);
         mask-image: radial-gradient(circle, transparent 16%, #000 100%);
@@ -751,7 +1019,7 @@
         top: 7%;
         left: 50%;
         width: max-content;
-        color: rgba(16, 12, 13, 0.075);
+        color: rgba(255, 249, 236, 0.055);
         font-size: clamp(5rem, 14vw, 13rem);
         font-weight: 950;
         line-height: 0.7;
@@ -767,7 +1035,7 @@
         display: flex;
         align-items: center;
         gap: 11px;
-        color: rgba(16, 12, 13, 0.68);
+        color: rgba(255, 249, 236, 0.62);
         font: 800 9px/1 "Courier New", monospace;
         letter-spacing: 0.18em;
       }
@@ -783,11 +1051,15 @@
         position: relative;
         width: min(780px, 92vw);
         padding: clamp(35px, 6vw, 76px);
-        border: 2px solid var(--ink);
-        background: rgba(255, 249, 236, 0.82);
+        border: 2px solid rgba(255, 249, 236, 0.72);
+        color: var(--paper);
+        background:
+          linear-gradient(145deg, rgba(255, 249, 236, 0.09), rgba(255, 249, 236, 0.025)),
+          rgba(12, 9, 10, 0.72);
         box-shadow:
           14px 14px 0 var(--red),
-          29px 29px 0 var(--ink);
+          29px 29px 0 rgba(255, 249, 236, 0.82),
+          0 34px 80px rgba(0, 0, 0, 0.48);
         backdrop-filter: blur(16px);
         transform: rotate(-1.2deg);
         -webkit-backdrop-filter: blur(16px);
@@ -800,7 +1072,7 @@
         padding: 7px 14px;
         content: "最后一题";
         color: var(--paper);
-        background: var(--ink);
+        background: var(--red);
         font: 700 9px/1 "Courier New", monospace;
         letter-spacing: 0.18em;
       }
@@ -852,9 +1124,9 @@
         position: relative;
         min-height: 76px;
         padding: 16px 18px;
-        border: 2px solid var(--ink);
-        color: var(--ink);
-        background: transparent;
+        border: 2px solid rgba(255, 249, 236, 0.72);
+        color: var(--paper);
+        background: rgba(255, 249, 236, 0.025);
         font-size: clamp(0.95rem, 2.2vw, 1.35rem);
         font-weight: 900;
         line-height: 1.25;
@@ -876,8 +1148,8 @@
 
       .choice:hover,
       .choice:focus-visible {
-        color: var(--paper);
-        background: var(--ink);
+        color: var(--ink);
+        background: var(--paper);
         box-shadow: 7px 7px 0 var(--red);
         outline: none;
         transform: translate(-4px, -4px) rotate(-1deg);
@@ -887,7 +1159,7 @@
       .choice:last-child:focus-visible {
         color: var(--ink);
         background: var(--ice);
-        box-shadow: 7px 7px 0 var(--ink);
+        box-shadow: 7px 7px 0 var(--paper);
         transform: translate(-4px, -4px) rotate(1deg);
       }
 
@@ -1166,6 +1438,36 @@
         100% { transform: rotate(-1.2deg) scale(1); }
       }
 
+      @keyframes photo3-ambient-drift {
+        from {
+          transform: scale(1.15) translate3d(-1.5%, 0.5%, 0);
+          filter: blur(43px) saturate(0.72) brightness(0.28);
+        }
+        to {
+          transform: scale(1.23) translate3d(2%, -1.5%, 0);
+          filter: blur(50px) saturate(0.92) brightness(0.37);
+        }
+      }
+
+      @keyframes photo3-wash-breathe {
+        from { opacity: 0.74; filter: hue-rotate(-4deg); }
+        to { opacity: 1; filter: hue-rotate(7deg); }
+      }
+
+      @keyframes photo3-grid-drift {
+        to { background-position: var(--p3-grid-size) var(--p3-grid-size), var(--p3-grid-size) var(--p3-grid-size); }
+      }
+
+      @keyframes photo3-orb-float {
+        from { transform: translate3d(-12%, 5%, 0) scale(0.88); opacity: 0.32; }
+        to { transform: translate3d(94%, 38%, 0) scale(1.18); opacity: 0.68; }
+      }
+
+      @keyframes photo3-mobile-drift {
+        from { transform: scale(1.12) translate3d(-1%, 0, 0); }
+        to { transform: scale(1.18) translate3d(1.5%, -1%, 0); }
+      }
+
       @keyframes mobile-portrait-enter {
         from { opacity: 0; transform: scale(1.08); }
         to { opacity: 1; transform: scale(1); }
@@ -1421,6 +1723,105 @@
           opacity: 0.68;
         }
 
+        .chapter-three {
+          min-height: 150svh;
+          min-height: 150dvh;
+        }
+
+        .photo3-stage {
+          height: 100svh;
+          height: 100dvh;
+        }
+
+        .photo3-stage::before,
+        .photo3-stage::after {
+          width: 34px;
+          height: 2px;
+          box-shadow: 0 6px 0 rgba(255, 249, 236, 0.56);
+        }
+
+        .photo3-stage::before {
+          top: calc(21px + env(safe-area-inset-top));
+          left: 18px;
+        }
+
+        .photo3-stage::after {
+          right: 18px;
+          bottom: calc(20px + env(safe-area-inset-bottom));
+        }
+
+        .photo3-ambient {
+          inset: -5%;
+          opacity: 0.78;
+          filter: blur(24px) saturate(0.72) brightness(0.34);
+          animation-name: photo3-mobile-drift;
+        }
+
+        .photo3-wash::before {
+          --p3-grid-size: 20vw;
+          opacity: 0.09;
+        }
+
+        .photo3-wash::after {
+          width: 68vw;
+          filter: blur(28px);
+        }
+
+        .photo3-card {
+          width: 82vw;
+          max-height: 69dvh;
+          box-shadow:
+            9px 9px 0 rgba(123, 28, 38, 0.9),
+            18px 18px 0 rgba(23, 18, 18, 0.94),
+            0 26px 56px rgba(23, 18, 18, 0.28);
+        }
+
+        .photo3-card img {
+          object-position: center;
+        }
+
+        .photo3-card::after {
+          inset: 7px;
+        }
+
+        .cat-halo {
+          top: 48%;
+          width: 116vw;
+          height: 78vw;
+          opacity: 0.72;
+        }
+
+        .cat-halo::before,
+        .cat-halo::after {
+          width: 17%;
+        }
+
+        .chapter-three__word {
+          font-size: 24vw;
+          letter-spacing: -0.14em;
+        }
+
+        .chapter-three__word--left {
+          top: 11%;
+          left: 4vw;
+          text-shadow: 3px 3px 0 rgba(255, 249, 236, 0.82);
+        }
+
+        .chapter-three__word--right {
+          right: 4vw;
+          bottom: 8%;
+          text-shadow: 4px 4px 0 rgba(123, 28, 38, 0.36);
+        }
+
+        .chapter-three__lyh {
+          font-size: 62vw;
+          -webkit-text-stroke-color: rgba(255, 249, 236, 0.075);
+        }
+
+        .photo3-grain {
+          opacity: 0.055;
+        }
+
         .verdict {
           padding:
             calc(64px + env(safe-area-inset-top))
@@ -1440,7 +1841,7 @@
           border-width: 1.5px;
           box-shadow:
             8px 8px 0 var(--red),
-            16px 16px 0 var(--ink);
+            16px 16px 0 rgba(255, 249, 236, 0.8);
           transform: rotate(-0.7deg);
         }
 
@@ -1553,6 +1954,15 @@
           max-height: 69dvh;
         }
 
+        .photo3-card {
+          width: 72vw;
+          max-height: 68dvh;
+        }
+
+        .chapter-three__word {
+          font-size: 19vw;
+        }
+
         .chapter-two__word--one {
           top: 11%;
           font-size: 18vw;
@@ -1586,22 +1996,22 @@
 
       @media (max-width: 720px) and (hover: none) and (pointer: coarse) {
         .choice:hover {
-          color: var(--ink);
-          background: transparent;
+          color: var(--paper);
+          background: rgba(255, 249, 236, 0.025);
           box-shadow: none;
           transform: none;
         }
 
         .choice:last-child:hover {
-          color: var(--ink);
-          background: transparent;
+          color: var(--paper);
+          background: rgba(255, 249, 236, 0.025);
           box-shadow: none;
           transform: none;
         }
 
         .choice:active {
-          color: var(--paper);
-          background: var(--ink);
+          color: var(--ink);
+          background: var(--paper);
           box-shadow: 4px 4px 0 var(--red);
           transform: translate(-2px, -2px);
         }
@@ -1687,6 +2097,23 @@
       </div>
     </section>
 
+    <section class="chapter-three" id="portrait-three" aria-label="第三张照片">
+      <div class="photo3-stage">
+        <div class="photo3-ambient" aria-hidden="true"></div>
+        <div class="photo3-wash" aria-hidden="true"></div>
+        <div class="cat-halo" aria-hidden="true"></div>
+        <div class="chapter-three__lyh" aria-hidden="true">LYH</div>
+        <div class="chapter-three__word chapter-three__word--left" aria-hidden="true">小猫</div>
+        <div class="chapter-three__word chapter-three__word--right" aria-hidden="true">来了</div>
+
+        <figure class="photo3-card" aria-hidden="true">
+          <img src="./pic3.jpg" alt="" loading="lazy" decoding="async" draggable="false" />
+        </figure>
+
+        <div class="photo3-grain" aria-hidden="true"></div>
+      </div>
+    </section>
+
     <section class="verdict" id="verdict" aria-labelledby="verdict-title">
       <div class="verdict-marquee" aria-hidden="true">LYH · 爆爆 · LYH · 爆爆</div>
       <div class="question-card">
@@ -1701,12 +2128,13 @@
           </button>
         </div>
       </div>
-      <div class="verdict-stamp" aria-hidden="true">03 / 完</div>
+      <div class="verdict-stamp" aria-hidden="true">04 / 完</div>
     </section>
 
     <nav class="page-nav" aria-label="页面章节">
       <a href="#cover" aria-label="第一张照片"></a>
       <a href="#portrait-two" aria-label="第二张照片"></a>
+      <a href="#portrait-three" aria-label="第三张照片"></a>
       <a href="#verdict" aria-label="最后的问题"></a>
     </nav>
 
@@ -1729,6 +2157,7 @@
         const scatter = document.querySelector("#scatter");
         const pageProgress = document.querySelector("#pageProgress");
         const chapterTwo = document.querySelector(".chapter-two");
+        const chapterThree = document.querySelector(".chapter-three");
         const verdict = document.querySelector(".verdict");
         const reactionDialog = document.querySelector("#reactionDialog");
         const reactionMessage = document.querySelector("#reactionMessage");
@@ -1851,7 +2280,7 @@
           }, { passive: true });
         };
 
-        [scene, chapterTwo, verdict].forEach(bindBurstSurface);
+        [scene, chapterTwo, chapterThree, verdict].forEach(bindBurstSurface);
         let scrollTicking = false;
         const updateChapter = () => {
           if (scrollTicking) return;
@@ -1869,6 +2298,19 @@
             chapterTwo.style.setProperty("--word-one-x", `${((1 - progress) * 30).toFixed(2)}vw`);
             chapterTwo.style.setProperty("--word-two-x", `${((progress - 1) * 24).toFixed(2)}vw`);
             chapterTwo.style.setProperty("--orbit-rotation", `${(progress * 120).toFixed(2)}deg`);
+
+            const rectThree = chapterThree.getBoundingClientRect();
+            const travelThree = Math.max(1, rectThree.height - window.innerHeight);
+            const progressThree = Math.min(1, Math.max(0, -rectThree.top / travelThree));
+            chapterThree.style.setProperty("--three-progress", progressThree.toFixed(3));
+            chapterThree.style.setProperty("--p3-scale", (0.9 + progressThree * 0.1).toFixed(3));
+            chapterThree.style.setProperty("--p3-rotate", `${(3 - progressThree * 5).toFixed(2)}deg`);
+            chapterThree.style.setProperty("--p3-y", `${((0.5 - progressThree) * 6).toFixed(2)}vh`);
+            chapterThree.style.setProperty("--p3-image-scale", (1.06 - progressThree * 0.04).toFixed(3));
+            chapterThree.style.setProperty("--p3-left-x", `${(-(1 - progressThree) * 26).toFixed(2)}vw`);
+            chapterThree.style.setProperty("--p3-right-x", `${((1 - progressThree) * 24).toFixed(2)}vw`);
+            chapterThree.style.setProperty("--p3-halo-rotate", `${(-18 + progressThree * 108).toFixed(2)}deg`);
+
             const totalScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
             const overallProgress = Math.min(1, Math.max(0, window.scrollY / totalScroll));
             pageProgress.style.transform = `scaleX(${overallProgress.toFixed(4)})`;
